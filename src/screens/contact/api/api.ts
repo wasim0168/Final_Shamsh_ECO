@@ -3,7 +3,7 @@ import ENV from "@/lib/env";
 const isLocalhost = typeof window !== "undefined" && window.location.hostname === "localhost";
 const Base_Url = isLocalhost
   ? "http://localhost:5000"
-  : "https://shams.render.app";
+  : "https://shamsh-eco.onrender.com";
 
 interface sendEmailType {
   fullName: string;
