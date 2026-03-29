@@ -5,15 +5,15 @@ dotenv.config();
 
 export const transporter = nodemailer.createTransport({
     host: "smtp.hostinger.com",
-    port:"587",
+    port:"465",
     secure: false,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
-    },
-    tls: {
-        rejectUnauthorized: false,
-    },
+    }
+    // tls: {
+    //     rejectUnauthorized: false,
+    // },
 });
 
 const sendEmail = async ({
