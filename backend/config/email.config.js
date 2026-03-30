@@ -3,17 +3,19 @@ import dns from "dns";
 import dotenv from 'dotenv';
 dotenv.config();
 
+import { Resend } from 'resend';
 
+const resend = new Resend(process.env.EMAIL_PASS);
 
-export const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// export const transporter = nodemailer.createTransport({
+//   host: "smtp-relay.brevo.com",
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
 dns.setDefaultResultOrder("ipv4first");
 
 const sendEmail = async ({
@@ -25,8 +27,8 @@ const sendEmail = async ({
     subject,
 }) => {
     try {
-        await transporter.sendMail({
-            from: "Shamsh Eco <contact@resicode.com>",
+        await resend.emails.send({
+            from: "Shamsh Eco <contact@shamsheco.com>",
             to: "info@shamsheco.com",
             subject: `New Inquiry from ${fullName}`,
             text: `New contact form submission from ${fullName} (${email}): ${message}`,
@@ -98,8 +100,8 @@ const replyEmail = async ({
     subject,
 }) => {
     try {
-        await transporter.sendMail({
-            from: "Shamsh Eco <contact@resicode.com>",
+        await resend.emails.send({
+            from: "Shamsh Eco <contact@shamsheco.com>",
             to: email,
             subject: "We've Received Your Message - SHAMSH Eco Renew-Recycling",
             text: `Hello ${fullName},
