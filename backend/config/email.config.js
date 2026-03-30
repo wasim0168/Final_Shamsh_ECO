@@ -6,9 +6,9 @@ dotenv.config();
 
 
 export const transporter = nodemailer.createTransport({
-  host: "smtp.hostinger.com",
-  port: 465,
-  secure: true,
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -26,8 +26,8 @@ const sendEmail = async ({
 }) => {
     try {
         await transporter.sendMail({
-            from: `"Shams Eco Recycle" <${process.env.EMAIL_USER}>`,
-            to: process.env.EMAIL_USER,
+            from: "Shams Eco Recycle <contact@resicode.com>",
+            to: "info@shamsheco.com",
             subject: `New Inquiry from ${fullName}`,
             text: `New contact form submission from ${fullName} (${email}): ${message}`,
             html: `
@@ -99,7 +99,7 @@ const replyEmail = async ({
 }) => {
     try {
         await transporter.sendMail({
-            from: `"Shams Eco Recycle" <${process.env.EMAIL_USER}>`,
+            from: "Shams Eco Recycle <contact@resicode.com>",
             to: email,
             subject: "We've Received Your Message - SHAMSH Eco Renew-Recycling",
             text: `Hello ${fullName},
