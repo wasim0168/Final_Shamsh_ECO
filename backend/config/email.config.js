@@ -26,7 +26,7 @@ const sendEmail = async ({
 }) => {
     try {
         await transporter.sendMail({
-            from: "Shams Eco Recycle <contact@resicode.com>",
+            from: "Shamsh Eco <contact@resicode.com>",
             to: "info@shamsheco.com",
             subject: `New Inquiry from ${fullName}`,
             text: `New contact form submission from ${fullName} (${email}): ${message}`,
@@ -99,7 +99,7 @@ const replyEmail = async ({
 }) => {
     try {
         await transporter.sendMail({
-            from: "Shams Eco Recycle <contact@resicode.com>",
+            from: "Shamsh Eco <contact@resicode.com>",
             to: email,
             subject: "We've Received Your Message - SHAMSH Eco Renew-Recycling",
             text: `Hello ${fullName},
