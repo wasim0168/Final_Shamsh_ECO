@@ -94,7 +94,7 @@ export function ContactForm() {
                   <FieldLabel>Full Name *</FieldLabel>
                   <Input
                     {...field}
-                    placeholder="John Doe"
+                    placeholder="Enter Your Name"
                     aria-invalid={fieldState.invalid}
                     disabled={isPending}
                   />
@@ -115,9 +115,9 @@ export function ContactForm() {
                   <Input
                     {...field}
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="your@example.com"
                     aria-invalid={fieldState.invalid}
-                    disabled={isPending}
+                    disabled={isPending}  
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />

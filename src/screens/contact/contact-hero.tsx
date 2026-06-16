@@ -48,19 +48,19 @@ export default function ContactHero() {
           <ContactCard
             icon={<MapPin />}
             title="Visit Us"
-            lines={["123 Green Energy Blvd", "Solar City, SC 12345"]}
+            lines={["Plot no 39, ROAD, beside sai pride city, nanihal vihar, Mungi, Pacheda-1, Chhattisgarh "]}
           />
 
           <ContactCard
             icon={<Phone />}
             title="Call Us"
-            lines={["+1 (555) 123-4567", "Mon–Fri 9AM–6PM"]}
+            lines={["+91 62611 96163", "Mon–Fri 9AM–6PM"]}
           />
 
           <ContactCard
             icon={<Mail />}
             title="Email Us"
-            lines={["info@solarrecycle.com", "support@solarrecycle.com"]}
+            lines={["info@shamsheco.com"]}
           />
 
           <ContactCard

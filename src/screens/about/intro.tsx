@@ -124,7 +124,7 @@ export default function Intro() {
               </p>
 
               <p className="mt-4 text-green-600 font-semibold text-sm">
-                — Sarah Chen, Founder & CEO
+                ~ Ather Trading 
               </p>
             </div>
           </motion.div>

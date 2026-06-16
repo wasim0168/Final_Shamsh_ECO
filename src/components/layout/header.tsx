@@ -32,17 +32,18 @@ const Header = () => {
   return (
     <header className="fixed top-0 z-50 w-full bg-black/60 backdrop-blur border-b border-white/10">
       <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Logo */}
-        <div className="relative w-48 h-14">
+
+        {/* ✅ Logo (Fixed + Bigger) */}
+        <Link href="/">
           <Image
-            src="/solar_logo.png"
+            src="/logo_shamsh.png"
             alt="SHAMSH Eco Recycling"
-            fill
+            width={200}   // 🔥 increase size here
+            height={70}
             priority
-            className="object-contain"
-            style={{borderRadius:"20px"}}
+            className="object-contain rounded-[20px]"
           />
-        </div>
+        </Link>
 
         {/* ================= Desktop Nav ================= */}
         <div className="hidden md:flex items-center gap-8">
@@ -50,7 +51,7 @@ const Header = () => {
             const isActive =
               item.href === "/"
                 ? pathname === "/"
-                : item.href !== "#" && pathname.startsWith(item.href);
+                : pathname.startsWith(item.href);
 
             return (
               <Link
@@ -64,7 +65,6 @@ const Header = () => {
               >
                 {item.title}
 
-                {/* Active Underline */}
                 {isActive && (
                   <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-green-300 rounded-full" />
                 )}
@@ -72,14 +72,14 @@ const Header = () => {
             );
           })}
 
-          <Link href="https://wa.me/+916261196163">
-  <Button
-    size="sm"
-    className="h-8 rounded-full bg-green-600 hover:bg-green-700 px-5 text-sm font-bold"
-  >
-    Get Quote
-  </Button>
-</Link>
+          <Link href="https://wa.me/916261196163" target="_blank">
+            <Button
+              size="sm"
+              className="h-8 rounded-full bg-green-600 hover:bg-green-700 px-5 text-sm font-bold"
+            >
+              Get Quote
+            </Button>
+          </Link>
         </div>
 
         {/* ================= Mobile Menu ================= */}
@@ -98,18 +98,18 @@ const Header = () => {
             <SheetContent
               side="right"
               className="bg-black/90 backdrop-blur border-white/10"
+
             >
               <SheetHeader>
                 <SheetTitle className="text-white">
-                  <div className="relative w-40 h-10">
-                    <Image
-                      src="/logo.png"
-                      alt="SHAMSH Eco Recycling"
-                      fill
-                      priority
-                      className="object-contain"
-                    />
-                  </div>
+                  {/* ✅ Mobile Logo Fix */}
+                  <Image
+                    src="/logo_shamsh.png"
+                    alt="SHAMSH Eco Recycling"
+                    width={160}
+                    height={60}
+                    className="object-contain"
+                  />
                 </SheetTitle>
               </SheetHeader>
 
@@ -118,7 +118,7 @@ const Header = () => {
                   const isActive =
                     item.href === "/"
                       ? pathname === "/"
-                      : item.href !== "#" && pathname.startsWith(item.href);
+                      : pathname.startsWith(item.href);
 
                   return (
                     <Link
@@ -135,9 +135,11 @@ const Header = () => {
                   );
                 })}
 
-                <Button className="mt-4 rounded-full bg-green-600 hover:bg-green-700 font-bold">
-                  Get Quote
-                </Button>
+                <Link href="https://wa.me/916261196163" target="_blank">
+                  <Button className="mt-4 rounded-full bg-green-600 hover:bg-green-700 font-bold">
+                    Get Quote
+                  </Button>
+                </Link>
               </div>
             </SheetContent>
           </Sheet>
