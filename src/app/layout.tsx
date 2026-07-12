@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   title: "Solar Panel Recycling Company - SHAMSH",
   description:
     "SHAMSH is a leading solar panel recycling company dedicated to sustainable solutions. We specialize in eco-friendly recycling processes, ensuring responsible disposal and resource recovery. Our commitment to environmental excellence drives us to provide efficient and innovative recycling services for solar panels, contributing to a greener future.",
+  icons: {
+    icon: '/solar_logo_title.png',
+    shortcut: '/solar_logo_title.png',
+    apple: '/solar_logo_title.png',
+  },
 };
 
 export default function RootLayout({

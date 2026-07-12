@@ -45,6 +45,7 @@ interface MachineConfig {
   h: number;
   color: string;
   radius?: string;
+  icon?: string;
 }
 
 interface SceneAnimationProps {
@@ -258,6 +259,7 @@ const MACHINES: readonly MachineConfig[] = [
     w: 110,
     h: 80,
     color: "#546e7a",
+    icon: "🔬",
   },
   {
     label: "Dismantling",
@@ -266,6 +268,7 @@ const MACHINES: readonly MachineConfig[] = [
     w: 130,
     h: 100,
     color: "#455a64",
+    icon: "⚙️",
   },
   {
     label: "Chemical",
@@ -275,6 +278,7 @@ const MACHINES: readonly MachineConfig[] = [
     h: 70,
     color: "#37474f",
     radius: "40% 40% 8px 8px",
+    icon: "⚗️",
   },
   {
     label: "Thermal",
@@ -283,6 +287,7 @@ const MACHINES: readonly MachineConfig[] = [
     w: 100,
     h: 120,
     color: "#4e342e",
+    icon: "🔥",
   },
   {
     label: "Separation",
@@ -291,6 +296,7 @@ const MACHINES: readonly MachineConfig[] = [
     w: 160,
     h: 80,
     color: "#1a237e",
+    icon: "🔱",
   },
 ] as const;
 
@@ -437,7 +443,20 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
       className="scene-container"
       style={{ position: "absolute", inset: 0, overflow: "hidden" }}
     >
-      {/* Conveyor belt */}
+      {/* Industrial background details */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: `
+            radial-gradient(ellipse at 20% 80%, rgba(255,165,0,0.05), transparent 50%),
+            radial-gradient(ellipse at 80% 20%, rgba(0,150,255,0.05), transparent 50%)
+          `,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Conveyor belt with industrial supports */}
       <div
         style={{
           position: "absolute",
@@ -449,12 +468,41 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
           borderRadius: 6,
           overflow: "hidden",
           boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+          border: "2px solid #5d6d7e",
         }}
       >
         <div className="conveyor-belt" />
+        {/* Conveyor supports */}
+        {Array.from({ length: 12 }, (_, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              bottom: -16,
+              left: `${i * 9}%`,
+              width: 4,
+              height: 16,
+              background: "#5d6d7e",
+              borderRadius: "0 0 2px 2px",
+            }}
+          />
+        ))}
       </div>
 
-      {/* Factory machines */}
+      {/* Factory floor details */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "30%",
+          left: 0,
+          right: 0,
+          height: 4,
+          background: "repeating-linear-gradient(90deg, #4a5a6a, #4a5a6a 20px, #3d4d5d 20px, #3d4d5d 40px)",
+          opacity: 0.3,
+        }}
+      />
+
+      {/* Machines with icons */}
       {MACHINES.map((m) => (
         <div
           key={m.label}
@@ -467,16 +515,19 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
             background: `linear-gradient(to bottom,${m.color},${m.color}dd)`,
             borderRadius: m.radius ?? 8,
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 6px 16px rgba(0,0,0,0.4)",
+            boxShadow: "0 6px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)",
             border: "1px solid rgba(255,255,255,0.08)",
+            gap: 4,
           }}
         >
+          <span style={{ fontSize: "1.5rem" }}>{m.icon}</span>
           <span
             style={{
               color: "rgba(255,255,255,0.85)",
-              fontSize: "0.7rem",
+              fontSize: "0.65rem",
               fontWeight: 700,
               letterSpacing: 1,
               textTransform: "uppercase",
@@ -485,6 +536,41 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
           >
             {m.label}
           </span>
+          {/* Machine indicator lights */}
+          <div
+            style={{
+              display: "flex",
+              gap: 4,
+              marginTop: 2,
+            }}
+          >
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background:
+                    step >= 2 && i < step - 1
+                      ? "#4caf50"
+                      : step >= 2 && i === step - 2
+                      ? "#ffeb3b"
+                      : "#555",
+                  boxShadow:
+                    step >= 2 && i < step - 1
+                      ? "0 0 8px #4caf50"
+                      : step >= 2 && i === step - 2
+                      ? "0 0 8px #ffeb3b"
+                      : "none",
+                  animation:
+                    step >= 2 && i === step - 2
+                      ? "blinkLight 0.8s ease-in-out infinite"
+                      : "none",
+                }}
+              />
+            ))}
+          </div>
         </div>
       ))}
 
@@ -495,37 +581,216 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
           left: showTruck1 ? "2%" : "-30%",
           opacity: showTruck1 ? 1 : 0,
         }}
-        color="#e74c3c"
+        color="#0bc552"
         darkColor="#c0392b"
       />
-
-      {/* Solar panel */}
-      {showPanel && (
-        <div ref={panelRef} style={{ position: "absolute", ...panelPos }}>
-          <SolarPanelEl
-            style={{
-              position: "relative",
-              transform: [
-                `translateY(${step === 2 ? floatOffset * 0.5 : 0}px)`,
-                `rotate(${step === 2 ? floatOffset * 2 : 0}deg)`,
-                `scale(${panelScale})`,
-              ].join(" "),
-              filter:
-                step >= 5
-                  ? `hue-rotate(${floatOffset * 3}deg) brightness(1.2)`
-                  : "none",
-            }}
-          >
-            ☀️
-          </SolarPanelEl>
+{showPanel && (
+  <div ref={panelRef} style={{ position: "absolute", ...panelPos }}>
+    <div
+      style={{
+        position: "relative",
+        width: 140,
+        height: 90,
+        transform: [
+          `translateY(${step === 2 ? floatOffset * 0.5 : 0}px)`,
+          `rotate(${step === 2 ? floatOffset * 2 : 0}deg)`,
+          `scale(${panelScale})`,
+        ].join(" "),
+        filter:
+          step >= 5
+            ? `hue-rotate(${floatOffset * 3}deg) brightness(1.2)`
+            : "none",
+        transition: "all 0.8s cubic-bezier(0.34,1.56,0.64,1)",
+      }}
+    >
+      {/* Stacked panel effect - multiple layers */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: -6,
+          left: 6,
+          width: "100%",
+          height: "100%",
+          background: "linear-gradient(135deg, #1a237e, #0d1b4a)",
+          borderRadius: 8,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+          opacity: 0.3,
+          transform: "rotate(-2deg) scale(0.98)",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: -3,
+          left: 3,
+          width: "100%",
+          height: "100%",
+          background: "linear-gradient(135deg, #1a237e, #0d1b4a)",
+          borderRadius: 8,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+          opacity: 0.5,
+          transform: "rotate(-1deg) scale(0.99)",
+        }}
+      />
+      
+      {/* Main solar panel with image */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          borderRadius: 8,
+          overflow: "hidden",
+          boxShadow: step >= 5
+            ? "0 0 30px rgba(255,165,0,0.3), 0 8px 20px rgba(0,0,0,0.4)"
+            : "0 8px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.1)",
+          background: "linear-gradient(135deg, #1a237e, #0d1b4a)",
+          border: "2px solid rgba(255,255,255,0.15)",
+        }}
+      >
+        {/* Solar panel image */}
+        <img
+          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&h=300&fit=crop&crop=center"
+          alt="Solar panel bundle"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+        />
+        
+        {/* Grid overlay for solar panel look */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `
+              repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 18px,
+                rgba(255,255,255,0.05) 18px,
+                rgba(255,255,255,0.05) 19px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 28px,
+                rgba(255,255,255,0.05) 28px,
+                rgba(255,255,255,0.05) 29px
+              )
+            `,
+            pointerEvents: "none",
+          }}
+        />
+        
+        {/* Shine effect */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "40%",
+            background: "linear-gradient(to bottom, rgba(255,255,255,0.15), transparent)",
+            pointerEvents: "none",
+          }}
+        />
+        
+        {/* Corner highlights */}
+        <div
+          style={{
+            position: "absolute",
+            top: 4,
+            left: 4,
+            width: 20,
+            height: 20,
+            borderTop: "2px solid rgba(255,255,255,0.2)",
+            borderLeft: "2px solid rgba(255,255,255,0.2)",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 4,
+            right: 4,
+            width: 20,
+            height: 20,
+            borderTop: "2px solid rgba(255,255,255,0.2)",
+            borderRight: "2px solid rgba(255,255,255,0.2)",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 4,
+            left: 4,
+            width: 20,
+            height: 20,
+            borderBottom: "2px solid rgba(255,255,255,0.2)",
+            borderLeft: "2px solid rgba(255,255,255,0.2)",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 4,
+            right: 4,
+            width: 20,
+            height: 20,
+            borderBottom: "2px solid rgba(255,255,255,0.2)",
+            borderRight: "2px solid rgba(255,255,255,0.2)",
+            pointerEvents: "none",
+          }}
+        />
+        
+        {/* Panel count badge */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 8,
+            right: 8,
+            background: "rgba(0,0,0,0.7)",
+            backdropFilter: "blur(4px)",
+            padding: "2px 10px",
+            borderRadius: 12,
+            color: "white",
+            fontSize: "0.65rem",
+            fontWeight: 600,
+            letterSpacing: 0.5,
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}
+        >
+          📦 x24
         </div>
-      )}
+        
+        {/* Sun icon overlay */}
+        <div
+          style={{
+            position: "absolute",
+            top: 8,
+            left: 8,
+            fontSize: "1.2rem",
+            opacity: 0.4,
+          }}
+        >
+          ☀️
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
       {/* Separated materials (step 6+) */}
       {showMaterials &&
         MATERIALS.map((mat, i) => {
           const isEven = i % 2 === 0;
           const isPurification = step === 7;
+          const isRedistribution = step === 8;
           return (
             <div
               key={mat.id}
@@ -543,12 +808,17 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
                 fontSize: "1.4rem",
                 boxShadow: isPurification
                   ? `0 0 20px 6px ${mat.color}, 0 4px 12px rgba(0,0,0,0.3)`
+                  : isRedistribution
+                  ? `0 0 30px 10px ${mat.color}44, 0 4px 12px rgba(0,0,0,0.3)`
                   : "0 4px 12px rgba(0,0,0,0.3)",
                 transform: `translateY(${floatOffset * (isEven ? 1 : -1)}px)`,
-                transition: "box-shadow 0.5s ease",
+                transition: "box-shadow 0.5s ease, transform 0.3s ease",
                 animation: "fadeScaleIn 0.5s ease forwards",
                 animationDelay: `${i * 0.1}s`,
                 opacity: 0,
+                border: isPurification
+                  ? `2px solid ${mat.color}`
+                  : "none",
               }}
             >
               {mat.icon}
@@ -567,7 +837,7 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
         darkColor="#388e3c"
       />
 
-      {/* Ceiling lights */}
+      {/* Ceiling lights with industrial feel */}
       <div
         style={{
           position: "absolute",
@@ -579,21 +849,87 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
           pointerEvents: "none",
         }}
       >
-        {Array.from({ length: 6 }, (_, i) => (
+        {Array.from({ length: 8 }, (_, i) => (
           <div
             key={i}
             style={{
-              width: 32,
-              height: 32,
-              borderRadius: "50%",
-              background: "radial-gradient(circle,#ffeb3b,#ff9800)",
-              boxShadow: `0 0 ${16 + Math.sin(floatOffset / 8 + i) * 6}px ${
-                8 + Math.sin(floatOffset / 8 + i) * 3
-              }px rgba(255,235,59,0.6)`,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 4,
             }}
-          />
+          >
+            <div
+              style={{
+                width: 8,
+                height: 20,
+                background: "#4a5a6a",
+                borderRadius: "2px 2px 0 0",
+              }}
+            />
+            <div
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: "50%",
+                background: `radial-gradient(circle, ${
+                  step > 0 ? "#ffeb3b" : "#555"
+                }, ${step > 0 ? "#ff9800" : "#333"})`,
+                boxShadow: `0 0 ${
+                  16 + Math.sin(floatOffset / 8 + i) * 6
+                }px ${
+                  8 + Math.sin(floatOffset / 8 + i) * 3
+                }px rgba(255,235,59,${step > 0 ? 0.6 : 0.1})`,
+                transition: "all 0.5s ease",
+              }}
+            />
+          </div>
         ))}
       </div>
+
+      {/* Safety markings on floor */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "30%",
+          left: "10%",
+          right: "10%",
+          display: "flex",
+          justifyContent: "space-between",
+          pointerEvents: "none",
+        }}
+      >
+        {Array.from({ length: 5 }, (_, i) => (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              gap: 4,
+              alignItems: "center",
+            }}
+          >
+            {Array.from({ length: 4 }, (_, j) => (
+              <div
+                key={j}
+                style={{
+                  width: 8,
+                  height: 8,
+                  background: i % 2 === 0 ? "#ffeb3b" : "#4caf50",
+                  opacity: 0.3,
+                  borderRadius: 2,
+                }}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <style>{`
+        @keyframes blinkLight {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
+        }
+      `}</style>
     </div>
   );
 };
@@ -1152,7 +1488,7 @@ const DesktopProcess = () => {
             #2c3e50 20px,
             #2c3e50 40px
           );
-          animation: moveBelt 1.5s linear infinite;
+          animation: moveBelt 3.5s linear infinite;
         }
 
         .progress-shine {
@@ -1175,6 +1511,11 @@ const DesktopProcess = () => {
         @keyframes fadeScaleIn {
           from { opacity: 0; transform: scale(0.5); }
           to   { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes blinkLight {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
         }
 
         /* ── Mobile Responsive Styles ─────────────────────────────────────── */
@@ -1217,7 +1558,6 @@ const DesktopProcess = () => {
             gap: 2px !important;
             padding: 0 2px !important;
             margin-bottom: 20px !important;
-            /* Enable horizontal scroll on very small screens */
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
           }
