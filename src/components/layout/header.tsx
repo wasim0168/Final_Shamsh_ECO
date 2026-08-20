@@ -36,7 +36,7 @@ const Header = () => {
         {/* ✅ Logo (Fixed + Bigger) */}
         <Link href="/">
           <Image
-            src="/logo_shamsh.png"
+            src="/logo_shamsh.avif"
             alt="SHAMSH Eco Recycling"
             width={200}   // 🔥 increase size here
             height={70}

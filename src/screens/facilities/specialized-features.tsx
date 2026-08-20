@@ -25,7 +25,7 @@ export function SpecializedFacilities() {
       {
         title: "Solar Panel Recycling",
         subtitle: "Complete End-of-Life Processing",
-        image: "/facilities/solar.jpeg",
+        image: "/facilities/solar.avif",
         description:
           "Comprehensive recovery of valuable materials from end-of-life solar panels with zero environmental impact.",
         highlights: [
@@ -51,7 +51,7 @@ export function SpecializedFacilities() {
       {
         title: "Solar Cell Processing",
         subtitle: "Advanced Material Recovery",
-        image: "/facilities/processing.jpg",
+        image: "/facilities/processing.avif",
         description:
           "Advanced thermal processing for high-purity silicon recovery and material extraction from solar cells.",
         highlights: [
@@ -77,7 +77,7 @@ export function SpecializedFacilities() {
       {
         title: "E-Waste Components",
         subtitle: "Electronic Waste Processing",
-        image: "/facilities/waste.jpg",
+        image: "/facilities/waste.avif",
         description:
           "Specialized processing of electronic components with precision material separation and hazardous waste management.",
         highlights: [

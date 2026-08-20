@@ -11,7 +11,7 @@ export default function Intro() {
       <section className="relative w-full h-150 flex items-center justify-center text-center text-white overflow-hidden">
         {/* Background Image */}
         <Image
-          src="/about/about.png" // put your image inside public/
+          src="/about/about.avif" // put your image inside public/
           alt="Solar Recycling"
           fill
           priority

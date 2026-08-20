@@ -16,7 +16,7 @@ export default function HeroFacilities() {
       {/* ================= HERO IMAGE ================= */}
       <div className="relative w-full h-[420px] md:h-[500px]">
         <Image
-          src="/facilities/facilities.png" // place inside public/
+          src="/facilities/facilities.avif" // place inside public/
           alt="Solar Recycling Facility"
           fill
           priority
