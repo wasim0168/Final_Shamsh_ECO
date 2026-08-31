@@ -29,12 +29,12 @@ export const footerData = {
   ],
 
   quickLinks: [
-    { name: "Home", href: "#" },
-    { name: "About Us", href: "#" },
-    { name: "Services", href: "#" },
-    { name: "Recycling Process", href: "#" },
-    { name: "Facilities", href: "#" },
-    { name: "Contact Us", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "About Us", href: "/about" },
+    { name: "Facilities", href: "/facilities" },
+    { name: "Recycling Process", href: "/process" },
+    { name: "Partner", href: "/partner" },
+    { name: "Contact Us", href: "/contactUs" },
   ],
 
   services: [
