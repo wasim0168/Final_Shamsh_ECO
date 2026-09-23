@@ -9,6 +9,7 @@ export const connectDb = async () => {
         await connect(process.env.DATABASE_URL);
         console.log("Database connected successfully");
     } catch (error) {
+        console.log(error);
         throw new Error("Failed to connect Database", error);
     }
 };
