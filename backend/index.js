@@ -17,6 +17,10 @@ app.use(express.json());
 
 connectDb()
 
+app.get("/health", async (req,res)=>{
+    res.send("Wake up");
+});
+
 app.post("/api/email", async (req, res) => {
     try {
         const { fullName, email, phone, company, subject, message } = req.body;
