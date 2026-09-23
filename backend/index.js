@@ -3,7 +3,7 @@ import cors from 'cors';
 
 import { sendEmail, replyEmail } from "./config/email.config.js";
 import Emails from "./model/Email.js";
-import { connectDb } from './config/db.config.js';
+import connectDb from './config/db.config.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
