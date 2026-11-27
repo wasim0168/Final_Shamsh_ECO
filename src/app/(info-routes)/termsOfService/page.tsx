@@ -253,12 +253,12 @@ export default function TermsOfService() {
               These Terms of Service shall be governed by and construed in
               accordance with the laws of India. Any disputes arising under
               these terms shall be subject to the exclusive jurisdiction of the
-              courts in [Your City], India.
+              courts in Raipur, India.
             </p>
             <div className="mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-500">
                 <span className="font-semibold">📍 Jurisdiction:</span> All
-                legal proceedings shall be conducted in [Your City], India.
+                legal proceedings shall be conducted in Raipur, India.
               </p>
             </div>
           </section>
@@ -359,7 +359,7 @@ export default function TermsOfService() {
               <div>
                 <p className="text-sm text-gray-500">Visit us at</p>
                 <p className="text-gray-800 font-medium">
-                  123 Eco Street, Green City, GC 12345
+                  plot no 39, ROAD, beside sai pride city, nanihal vihar, Mungi, Pacheda-1, Chhattisgarh 493111
                 </p>
               </div>
             </div>

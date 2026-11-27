@@ -233,7 +233,7 @@ export default function ComplianceCertifications() {
               variants={item}
               className="text-xs sm:text-sm text-primary-foreground/80 space-y-2 pt-4"
             >
-              <p>📞 Call us at 1-800-RECYCLE or visit our office</p>
+              <p>📞 Call us or visit our office</p>
               <p>📧 Email: info@shamsheco.com</p>
             </motion.div>
           </motion.div>

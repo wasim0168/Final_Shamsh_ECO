@@ -36,14 +36,14 @@ const Header = () => {
 
         {/* ✅ Logo (Fixed + Bigger) */}
         <Link href="/">
-          <Image
-            src="/logo_shamsh.avif"
-            alt="SHAMSH Eco Recycling"
-            width={200}   // 🔥 increase size here
-            height={70}
-            priority
-            className="object-contain rounded-[20px]"
-          />
+         <Image
+  src="/logo_shamsh.avif"
+  alt="SHAMSH Eco Recycling"
+  width={200}
+  height={70}
+  priority
+  className="h-[70px] w-auto object-contain rounded-[20px]"
+/>
         </Link>
 
         {/* ================= Desktop Nav ================= */}
@@ -104,13 +104,13 @@ const Header = () => {
               <SheetHeader>
                 <SheetTitle className="text-white">
                   {/* ✅ Mobile Logo Fix */}
-                  <Image
-                    src="/logo_shamsh.png"
-                    alt="SHAMSH Eco Recycling"
-                    width={160}
-                    height={60}
-                    className="object-contain"
-                  />
+                 <Image
+  src="/logo_shamsh.avif"
+  alt="SHAMSH Eco Recycling"
+  width={160}
+  height={60}
+  className="h-[60px] w-auto object-contain"
+/>
                 </SheetTitle>
               </SheetHeader>
 

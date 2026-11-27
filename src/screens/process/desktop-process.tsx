@@ -16,7 +16,7 @@ interface RecyclingStep {
   number: string;
   label: string;
   title: string;
-  icon: string;
+  iconKey: IconKey;
   color: string;
   accentColor: string;
   description: string;
@@ -32,7 +32,7 @@ interface MaterialItem {
   id: string;
   label: string;
   color: string;
-  icon: string;
+  iconKey: IconKey;
   x: string;
   y: string;
 }
@@ -45,7 +45,7 @@ interface MachineConfig {
   h: number;
   color: string;
   radius?: string;
-  icon?: string;
+  iconKey: IconKey;
 }
 
 interface SceneAnimationProps {
@@ -56,11 +56,6 @@ interface TruckProps {
   style?: CSSProperties;
   color?: string;
   darkColor?: string;
-}
-
-interface SolarPanelProps {
-  style?: CSSProperties;
-  children?: ReactNode;
 }
 
 interface StepIndicatorProps {
@@ -76,6 +71,164 @@ interface StepCardProps {
   onClick: () => void;
 }
 
+type IconKey =
+  | "truck"
+  | "microscope"
+  | "gear"
+  | "flask"
+  | "flame"
+  | "trident"
+  | "diamond"
+  | "shipping"
+  | "glass"
+  | "silicon"
+  | "silver"
+  | "copper"
+  | "sun"
+  | "check";
+
+// ─── SVG Icon Set ─────────────────────────────────────────────────────────────
+
+const Icon: FC<{ name: IconKey; size?: number; color?: string }> = ({
+  name,
+  size = 24,
+  color = "currentColor",
+}) => {
+  const common = {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: 2,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+
+  switch (name) {
+    case "truck":
+      return (
+        <svg {...common}>
+          <path d="M1 3h15v13H1z" />
+          <path d="M16 8h4l3 3v5h-7V8z" />
+          <circle cx="5.5" cy="18.5" r="2.5" />
+          <circle cx="18.5" cy="18.5" r="2.5" />
+        </svg>
+      );
+    case "microscope":
+      return (
+        <svg {...common}>
+          <path d="M6 18h8" />
+          <path d="M3 22h18" />
+          <path d="M14 22a7 7 0 1 0 0-14h-1" />
+          <path d="M9 14h2" />
+          <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2z" />
+          <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3" />
+        </svg>
+      );
+    case "gear":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </svg>
+      );
+    case "flask":
+      return (
+        <svg {...common}>
+          <path d="M9 3h6" />
+          <path d="M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3" />
+          <path d="M6.5 15h11" />
+        </svg>
+      );
+    case "flame":
+      return (
+        <svg {...common}>
+          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+        </svg>
+      );
+    case "trident":
+      return (
+        <svg {...common}>
+          <path d="M12 2v20" />
+          <path d="M4 8c0 4 3 6 8 6s8-2 8-6" />
+          <path d="M2 6l2 2 2-2" />
+          <path d="M18 6l2 2 2-2" />
+          <path d="M10 8l2-2 2 2" />
+        </svg>
+      );
+    case "diamond":
+      return (
+        <svg {...common}>
+          <path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z" />
+          <path d="M8 12h8" />
+          <path d="M12 8v8" />
+        </svg>
+      );
+    case "shipping":
+      return (
+        <svg {...common}>
+          <path d="M16 3h5v13h-5z" />
+          <path d="M1 3h15v13H1z" />
+          <circle cx="5.5" cy="18.5" r="2.5" />
+          <circle cx="18.5" cy="18.5" r="2.5" />
+        </svg>
+      );
+    case "glass":
+      return (
+        <svg {...common}>
+          <rect x="3" y="3" width="18" height="18" rx="1.5" />
+          <path d="M3 9h18" />
+          <path d="M9 3v18" />
+        </svg>
+      );
+    case "silicon":
+      return (
+        <svg {...common}>
+          <path d="M12 2 4 7v10l8 5 8-5V7z" />
+          <path d="M4 7l8 5 8-5" />
+          <path d="M12 12v10" />
+        </svg>
+      );
+    case "silver":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 3v18" />
+          <path d="M3 12h18" />
+        </svg>
+      );
+    case "copper":
+      return (
+        <svg {...common}>
+          <path d="M13 2 3 14h8l-1 8 10-12h-8z" />
+        </svg>
+      );
+    case "sun":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="M4.93 4.93l1.41 1.41" />
+          <path d="M17.66 17.66l1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="M4.93 19.07l1.41-1.41" />
+          <path d="M17.66 6.34l1.41-1.41" />
+        </svg>
+      );
+    case "check":
+      return (
+        <svg {...common}>
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const RECYCLING_STEPS: readonly RecyclingStep[] = [
@@ -84,7 +237,7 @@ const RECYCLING_STEPS: readonly RecyclingStep[] = [
     number: "STEP 01",
     label: "Collection",
     title: "Collection & Transport",
-    icon: "🚛",
+    iconKey: "truck",
     color: "#0a4f70",
     accentColor: "#1a7ca3",
     description:
@@ -100,7 +253,7 @@ const RECYCLING_STEPS: readonly RecyclingStep[] = [
     number: "STEP 02",
     label: "Inspection",
     title: "Inspection & Testing",
-    icon: "🔬",
+    iconKey: "microscope",
     color: "#1a5276",
     accentColor: "#2471a3",
     description:
@@ -116,7 +269,7 @@ const RECYCLING_STEPS: readonly RecyclingStep[] = [
     number: "STEP 03",
     label: "Dismantling",
     title: "Dismantling",
-    icon: "⚙️",
+    iconKey: "gear",
     color: "#154360",
     accentColor: "#1f618d",
     description:
@@ -132,7 +285,7 @@ const RECYCLING_STEPS: readonly RecyclingStep[] = [
     number: "STEP 04",
     label: "Chemical",
     title: "Chemical Treatment",
-    icon: "⚗️",
+    iconKey: "flask",
     color: "#0e6655",
     accentColor: "#17a589",
     description:
@@ -148,7 +301,7 @@ const RECYCLING_STEPS: readonly RecyclingStep[] = [
     number: "STEP 05",
     label: "Thermal",
     title: "Thermal Processing",
-    icon: "🔥",
+    iconKey: "flame",
     color: "#784212",
     accentColor: "#d35400",
     description:
@@ -164,7 +317,7 @@ const RECYCLING_STEPS: readonly RecyclingStep[] = [
     number: "STEP 06",
     label: "Separation",
     title: "Material Separation",
-    icon: "🔱",
+    iconKey: "trident",
     color: "#512e5f",
     accentColor: "#8e44ad",
     description:
@@ -180,7 +333,7 @@ const RECYCLING_STEPS: readonly RecyclingStep[] = [
     number: "STEP 07",
     label: "Purification",
     title: "Purification",
-    icon: "💎",
+    iconKey: "diamond",
     color: "#145a32",
     accentColor: "#1e8449",
     description:
@@ -196,7 +349,7 @@ const RECYCLING_STEPS: readonly RecyclingStep[] = [
     number: "STEP 08",
     label: "Redistribution",
     title: "Redistribution",
-    icon: "🚚",
+    iconKey: "shipping",
     color: "#1a5276",
     accentColor: "#2980b9",
     description:
@@ -221,7 +374,7 @@ const MATERIALS: readonly MaterialItem[] = [
     id: "glass",
     label: "Glass",
     color: "#4fc3f7",
-    icon: "🪟",
+    iconKey: "glass",
     x: "78%",
     y: "28%",
   },
@@ -229,7 +382,7 @@ const MATERIALS: readonly MaterialItem[] = [
     id: "silicon",
     label: "Silicon",
     color: "#78909c",
-    icon: "💠",
+    iconKey: "silicon",
     x: "84%",
     y: "28%",
   },
@@ -237,7 +390,7 @@ const MATERIALS: readonly MaterialItem[] = [
     id: "silver",
     label: "Silver",
     color: "#b0bec5",
-    icon: "🔩",
+    iconKey: "silver",
     x: "78%",
     y: "53%",
   },
@@ -245,7 +398,7 @@ const MATERIALS: readonly MaterialItem[] = [
     id: "copper",
     label: "Copper",
     color: "#ff9800",
-    icon: "⚡",
+    iconKey: "copper",
     x: "84%",
     y: "53%",
   },
@@ -259,7 +412,7 @@ const MACHINES: readonly MachineConfig[] = [
     w: 110,
     h: 80,
     color: "#546e7a",
-    icon: "🔬",
+    iconKey: "microscope",
   },
   {
     label: "Dismantling",
@@ -268,7 +421,7 @@ const MACHINES: readonly MachineConfig[] = [
     w: 130,
     h: 100,
     color: "#455a64",
-    icon: "⚙️",
+    iconKey: "gear",
   },
   {
     label: "Chemical",
@@ -278,7 +431,7 @@ const MACHINES: readonly MachineConfig[] = [
     h: 70,
     color: "#37474f",
     radius: "40% 40% 8px 8px",
-    icon: "⚗️",
+    iconKey: "flask",
   },
   {
     label: "Thermal",
@@ -287,7 +440,7 @@ const MACHINES: readonly MachineConfig[] = [
     w: 100,
     h: 120,
     color: "#4e342e",
-    icon: "🔥",
+    iconKey: "flame",
   },
   {
     label: "Separation",
@@ -296,7 +449,7 @@ const MACHINES: readonly MachineConfig[] = [
     w: 160,
     h: 80,
     color: "#1a237e",
-    icon: "🔱",
+    iconKey: "trident",
   },
 ] as const;
 
@@ -319,31 +472,6 @@ const clamp = (val: number, min: number, max: number): number =>
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SolarPanelEl: FC<SolarPanelProps> = ({ style, children }) => (
-  <div
-    style={{
-      position: "absolute",
-      width: 120,
-      height: 70,
-      background: "linear-gradient(45deg,#1a237e,#283593)",
-      borderRadius: 8,
-      boxShadow:
-        "0 8px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.1)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: "2rem",
-      zIndex: 20,
-      transition: "all 0.8s cubic-bezier(0.34,1.56,0.64,1)",
-      ...style,
-    }}
-  >
-    {children ?? "☀️"}
-  </div>
-);
-
 const Truck: FC<TruckProps> = ({
   style,
   color = "#e74c3c",
@@ -362,7 +490,6 @@ const Truck: FC<TruckProps> = ({
       ...style,
     }}
   >
-    {/* Cab */}
     <div
       style={{
         position: "absolute",
@@ -386,7 +513,6 @@ const Truck: FC<TruckProps> = ({
         }}
       />
     </div>
-    {/* Wheels */}
     {([28, 148] as const).map((left) => (
       <div
         key={left}
@@ -405,7 +531,7 @@ const Truck: FC<TruckProps> = ({
   </div>
 );
 
-// ─────────────────────────────────────────────────────────────────────────────
+// ─── Scene Animation ─────────────────────────────────────────────────────────
 
 const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -413,7 +539,6 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
   const rafRef = useRef<number | null>(null);
   const startTsRef = useRef<number | null>(null);
 
-  // Continuous float oscillation
   useEffect(() => {
     const tick = (ts: number) => {
       if (startTsRef.current === null) startTsRef.current = ts;
@@ -438,25 +563,34 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
   const panelScaleReduction = step >= 4 ? (step - 4) * 0.05 : 0;
   const panelScale = Math.max(0.5, 1 - panelScaleReduction);
 
+  // Active machine index for steps 2..6
+  const activeMachineIndex = step - 2;
+  const activeMachine =
+    activeMachineIndex >= 0 && activeMachineIndex < MACHINES.length
+      ? MACHINES[activeMachineIndex]
+      : null;
+
+  const showScanBeam = activeMachine !== null && step >= 2 && step <= 6;
+
   return (
     <div
       className="scene-container"
       style={{ position: "absolute", inset: 0, overflow: "hidden" }}
     >
-      {/* Industrial background details */}
+      {/* Ambient glow */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background: `
-            radial-gradient(ellipse at 20% 80%, rgba(255,165,0,0.05), transparent 50%),
-            radial-gradient(ellipse at 80% 20%, rgba(0,150,255,0.05), transparent 50%)
+            radial-gradient(ellipse at 20% 80%, rgba(255,165,0,0.06), transparent 55%),
+            radial-gradient(ellipse at 80% 20%, rgba(0,150,255,0.08), transparent 55%)
           `,
           pointerEvents: "none",
         }}
       />
 
-      {/* Conveyor belt with industrial supports */}
+      {/* Conveyor belt */}
       <div
         style={{
           position: "absolute",
@@ -472,7 +606,6 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
         }}
       >
         <div className="conveyor-belt" />
-        {/* Conveyor supports */}
         {Array.from({ length: 12 }, (_, i) => (
           <div
             key={i}
@@ -489,7 +622,7 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
         ))}
       </div>
 
-      {/* Factory floor details */}
+      {/* Factory floor line */}
       <div
         style={{
           position: "absolute",
@@ -497,82 +630,115 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
           left: 0,
           right: 0,
           height: 4,
-          background: "repeating-linear-gradient(90deg, #4a5a6a, #4a5a6a 20px, #3d4d5d 20px, #3d4d5d 40px)",
+          background:
+            "repeating-linear-gradient(90deg, #4a5a6a, #4a5a6a 20px, #3d4d5d 20px, #3d4d5d 40px)",
           opacity: 0.3,
         }}
       />
 
-      {/* Machines with icons */}
-      {MACHINES.map((m) => (
+      {/* Machines */}
+      {MACHINES.map((m, i) => {
+        const isActive = i === activeMachineIndex;
+        return (
+          <div
+            key={m.label}
+            style={{
+              position: "absolute",
+              left: m.left,
+              bottom: m.bottom,
+              width: m.w,
+              height: m.h,
+              background: `linear-gradient(to bottom,${m.color},${m.color}dd)`,
+              borderRadius: m.radius ?? 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: isActive
+                ? "0 0 24px 4px rgba(255,183,77,0.55), 0 6px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)"
+                : "0 6px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)",
+              border: isActive
+                ? "1.5px solid rgba(255,183,77,0.9)"
+                : "1px solid rgba(255,255,255,0.08)",
+              gap: 4,
+              transition: "all 0.4s ease",
+              zIndex: 12,
+            }}
+          >
+            <div
+              style={{
+                color: isActive ? "#ffb74d" : "rgba(255,255,255,0.9)",
+                filter: isActive
+                  ? "drop-shadow(0 0 6px rgba(255,183,77,0.8))"
+                  : "none",
+                transition: "color 0.4s ease",
+              }}
+            >
+              <Icon name={m.iconKey} size={28} />
+            </div>
+            <span
+              style={{
+                color: "rgba(255,255,255,0.85)",
+                fontSize: "0.62rem",
+                fontWeight: 700,
+                letterSpacing: 1,
+                textTransform: "uppercase",
+                textShadow: "0 1px 4px rgba(0,0,0,0.5)",
+              }}
+            >
+              {m.label}
+            </span>
+            <div style={{ display: "flex", gap: 4, marginTop: 2 }}>
+              {[0, 1, 2].map((k) => (
+                <div
+                  key={k}
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background:
+                      step >= 2 && k < step - 1
+                        ? "#4caf50"
+                        : step >= 2 && k === step - 2
+                        ? "#ffeb3b"
+                        : "#555",
+                    boxShadow:
+                      step >= 2 && k < step - 1
+                        ? "0 0 8px #4caf50"
+                        : step >= 2 && k === step - 2
+                        ? "0 0 8px #ffeb3b"
+                        : "none",
+                    animation:
+                      step >= 2 && k === step - 2
+                        ? "blinkLight 0.8s ease-in-out infinite"
+                        : "none",
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Scan beam from active machine to panel */}
+      {showScanBeam && activeMachine && (
         <div
-          key={m.label}
           style={{
             position: "absolute",
-            left: m.left,
-            bottom: m.bottom,
-            width: m.w,
-            height: m.h,
-            background: `linear-gradient(to bottom,${m.color},${m.color}dd)`,
-            borderRadius: m.radius ?? 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 6px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            gap: 4,
+            left: `calc(${activeMachine.left} + ${activeMachine.w / 2}px)`,
+            bottom: `calc(${activeMachine.bottom} + ${activeMachine.h}px)`,
+            width: 3,
+            height: 90,
+            background:
+              "linear-gradient(to bottom, rgba(255,183,77,0.9), rgba(255,183,77,0))",
+            transformOrigin: "top",
+            animation: "scanBeam 1.2s ease-in-out infinite",
+            pointerEvents: "none",
+            zIndex: 13,
+            filter: "blur(0.5px)",
           }}
-        >
-          <span style={{ fontSize: "1.5rem" }}>{m.icon}</span>
-          <span
-            style={{
-              color: "rgba(255,255,255,0.85)",
-              fontSize: "0.65rem",
-              fontWeight: 700,
-              letterSpacing: 1,
-              textTransform: "uppercase",
-              textShadow: "0 1px 4px rgba(0,0,0,0.5)",
-            }}
-          >
-            {m.label}
-          </span>
-          {/* Machine indicator lights */}
-          <div
-            style={{
-              display: "flex",
-              gap: 4,
-              marginTop: 2,
-            }}
-          >
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background:
-                    step >= 2 && i < step - 1
-                      ? "#4caf50"
-                      : step >= 2 && i === step - 2
-                      ? "#ffeb3b"
-                      : "#555",
-                  boxShadow:
-                    step >= 2 && i < step - 1
-                      ? "0 0 8px #4caf50"
-                      : step >= 2 && i === step - 2
-                      ? "0 0 8px #ffeb3b"
-                      : "none",
-                  animation:
-                    step >= 2 && i === step - 2
-                      ? "blinkLight 0.8s ease-in-out infinite"
-                      : "none",
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+        />
+      )}
 
       {/* Collection truck */}
       <Truck
@@ -584,208 +750,222 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
         color="#0bc552"
         darkColor="#c0392b"
       />
-{showPanel && (
-  <div ref={panelRef} style={{ position: "absolute", ...panelPos }}>
-    <div
-      style={{
-        position: "relative",
-        width: 140,
-        height: 90,
-        transform: [
-          `translateY(${step === 2 ? floatOffset * 0.5 : 0}px)`,
-          `rotate(${step === 2 ? floatOffset * 2 : 0}deg)`,
-          `scale(${panelScale})`,
-        ].join(" "),
-        filter:
-          step >= 5
-            ? `hue-rotate(${floatOffset * 3}deg) brightness(1.2)`
-            : "none",
-        transition: "all 0.8s cubic-bezier(0.34,1.56,0.64,1)",
-      }}
-    >
-      {/* Stacked panel effect - multiple layers */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: -6,
-          left: 6,
-          width: "100%",
-          height: "100%",
-          background: "linear-gradient(135deg, #1a237e, #0d1b4a)",
-          borderRadius: 8,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-          opacity: 0.3,
-          transform: "rotate(-2deg) scale(0.98)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: -3,
-          left: 3,
-          width: "100%",
-          height: "100%",
-          background: "linear-gradient(135deg, #1a237e, #0d1b4a)",
-          borderRadius: 8,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-          opacity: 0.5,
-          transform: "rotate(-1deg) scale(0.99)",
-        }}
-      />
-      
-      {/* Main solar panel with image */}
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "100%",
-          borderRadius: 8,
-          overflow: "hidden",
-          boxShadow: step >= 5
-            ? "0 0 30px rgba(255,165,0,0.3), 0 8px 20px rgba(0,0,0,0.4)"
-            : "0 8px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.1)",
-          background: "linear-gradient(135deg, #1a237e, #0d1b4a)",
-          border: "2px solid rgba(255,255,255,0.15)",
-        }}
-      >
-        {/* Solar panel image */}
-        <img
-          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&h=300&fit=crop&crop=center"
-          alt="Solar panel bundle"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "block",
-          }}
-        />
-        
-        {/* Grid overlay for solar panel look */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `
-              repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 18px,
-                rgba(255,255,255,0.05) 18px,
-                rgba(255,255,255,0.05) 19px
-              ),
-              repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 28px,
-                rgba(255,255,255,0.05) 28px,
-                rgba(255,255,255,0.05) 29px
-              )
-            `,
-            pointerEvents: "none",
-          }}
-        />
-        
-        {/* Shine effect */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "40%",
-            background: "linear-gradient(to bottom, rgba(255,255,255,0.15), transparent)",
-            pointerEvents: "none",
-          }}
-        />
-        
-        {/* Corner highlights */}
-        <div
-          style={{
-            position: "absolute",
-            top: 4,
-            left: 4,
-            width: 20,
-            height: 20,
-            borderTop: "2px solid rgba(255,255,255,0.2)",
-            borderLeft: "2px solid rgba(255,255,255,0.2)",
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: 4,
-            right: 4,
-            width: 20,
-            height: 20,
-            borderTop: "2px solid rgba(255,255,255,0.2)",
-            borderRight: "2px solid rgba(255,255,255,0.2)",
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 4,
-            left: 4,
-            width: 20,
-            height: 20,
-            borderBottom: "2px solid rgba(255,255,255,0.2)",
-            borderLeft: "2px solid rgba(255,255,255,0.2)",
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 4,
-            right: 4,
-            width: 20,
-            height: 20,
-            borderBottom: "2px solid rgba(255,255,255,0.2)",
-            borderRight: "2px solid rgba(255,255,255,0.2)",
-            pointerEvents: "none",
-          }}
-        />
-        
-        {/* Panel count badge */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 8,
-            right: 8,
-            background: "rgba(0,0,0,0.7)",
-            backdropFilter: "blur(4px)",
-            padding: "2px 10px",
-            borderRadius: 12,
-            color: "white",
-            fontSize: "0.65rem",
-            fontWeight: 600,
-            letterSpacing: 0.5,
-            border: "1px solid rgba(255,255,255,0.1)",
-          }}
-        >
-          📦 x24
-        </div>
-        
-        {/* Sun icon overlay */}
-        <div
-          style={{
-            position: "absolute",
-            top: 8,
-            left: 8,
-            fontSize: "1.2rem",
-            opacity: 0.4,
-          }}
-        >
-          ☀️
-        </div>
-      </div>
-    </div>
-  </div>
-)}
 
-      {/* Separated materials (step 6+) */}
+      {/* Illustrated Solar Panel Bundle */}
+      {showPanel && (
+        <div ref={panelRef} style={{ position: "absolute", ...panelPos }}>
+          <div
+            style={{
+              position: "relative",
+              width: 140,
+              height: 90,
+              transform: [
+                `translateY(${step === 2 ? floatOffset * 0.5 : 0}px)`,
+                `rotate(${step === 2 ? floatOffset * 2 : 0}deg)`,
+                `scale(${panelScale})`,
+              ].join(" "),
+              filter:
+                step >= 5
+                  ? `hue-rotate(${floatOffset * 2}deg) brightness(1.15)`
+                  : "none",
+              transition: "all 0.8s cubic-bezier(0.34,1.56,0.64,1)",
+              zIndex: 20,
+            }}
+          >
+            {/* Stacked depth layers */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: -8,
+                left: 8,
+                width: "100%",
+                height: "100%",
+                background: "linear-gradient(135deg,#0d1b4a,#071230)",
+                borderRadius: 8,
+                opacity: 0.35,
+                transform: "rotate(-3deg) scale(0.98)",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: -4,
+                left: 4,
+                width: "100%",
+                height: "100%",
+                background: "linear-gradient(135deg,#12224f,#08163a)",
+                borderRadius: 8,
+                opacity: 0.6,
+                transform: "rotate(-1.5deg) scale(0.99)",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              }}
+            />
+
+            {/* Main panel */}
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                height: "100%",
+                borderRadius: 8,
+                overflow: "hidden",
+                background:
+                  "linear-gradient(135deg,#1e3a8a 0%,#1e40af 45%,#0d1b4a 100%)",
+                border: "2px solid rgba(200,215,255,0.35)",
+                boxShadow:
+                  step >= 5
+                    ? "0 0 26px rgba(255,165,0,0.35), 0 8px 20px rgba(0,0,0,0.5)"
+                    : "0 8px 20px rgba(0,0,0,0.5), inset 0 0 20px rgba(30,64,175,0.4)",
+                transition: "box-shadow 0.5s ease",
+              }}
+            >
+              {/* Cell grid */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 6,
+                  background: `
+                    repeating-linear-gradient(
+                      90deg,
+                      rgba(30,58,138,0.9) 0 3px,
+                      rgba(96,165,250,0.25) 3px 4px
+                    ),
+                    repeating-linear-gradient(
+                      0deg,
+                      rgba(30,58,138,0.9) 0 3px,
+                      rgba(96,165,250,0.25) 3px 4px
+                    ),
+                    linear-gradient(135deg,#1e40af,#1e3a8a)
+                  `,
+                  borderRadius: 4,
+                }}
+              />
+
+              {/* Diagonal glare */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0.05) 55%, transparent 60%)",
+                  pointerEvents: "none",
+                }}
+              />
+
+              {/* Top gloss */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: "38%",
+                  background:
+                    "linear-gradient(to bottom, rgba(255,255,255,0.18), transparent)",
+                  pointerEvents: "none",
+                }}
+              />
+
+              {/* Corner frames */}
+              {[
+                { top: 4, left: 4 },
+                { top: 4, right: 4 },
+                { bottom: 4, left: 4 },
+                { bottom: 4, right: 4 },
+              ].map((pos, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    position: "absolute",
+                    width: 18,
+                    height: 18,
+                    ...pos,
+                    borderTop:
+                      idx === 0 || idx === 1
+                        ? "2px solid rgba(255,255,255,0.35)"
+                        : undefined,
+                    borderBottom:
+                      idx === 2 || idx === 3
+                        ? "2px solid rgba(255,255,255,0.35)"
+                        : undefined,
+                    borderLeft:
+                      idx === 0 || idx === 2
+                        ? "2px solid rgba(255,255,255,0.35)"
+                        : undefined,
+                    borderRight:
+                      idx === 1 || idx === 3
+                        ? "2px solid rgba(255,255,255,0.35)"
+                        : undefined,
+                    pointerEvents: "none",
+                  }}
+                />
+              ))}
+
+              {/* Sun icon */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 8,
+                  left: 8,
+                  color: "#ffb74d",
+                  filter: "drop-shadow(0 0 4px rgba(255,183,77,0.8))",
+                  opacity: 0.85,
+                }}
+              >
+                <Icon name="sun" size={14} />
+              </div>
+
+              {/* Bundle badge */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 8,
+                  right: 8,
+                  background: "rgba(0,0,0,0.72)",
+                  backdropFilter: "blur(4px)",
+                  padding: "2px 10px",
+                  borderRadius: 12,
+                  color: "#ffb74d",
+                  fontSize: "0.62rem",
+                  fontWeight: 700,
+                  letterSpacing: 0.5,
+                  border: "1px solid rgba(255,183,77,0.4)",
+                }}
+              >
+                x24
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Thermal sparks (step 5) */}
+      {step === 5 && (
+        <>
+          {Array.from({ length: 12 }, (_, i) => (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                left: `calc(63% + ${Math.sin(i * 1.3) * 40}px)`,
+                bottom: "60%",
+                width: 4,
+                height: 4,
+                borderRadius: "50%",
+                background: i % 3 === 0 ? "#ffeb3b" : "#ff9800",
+                boxShadow: "0 0 8px currentColor",
+                animation: `sparkFloat ${1.5 + (i % 3) * 0.4}s ease-out infinite`,
+                animationDelay: `${i * 0.12}s`,
+                pointerEvents: "none",
+                zIndex: 25,
+              }}
+            />
+          ))}
+        </>
+      )}
+
+      {/* Materials */}
       {showMaterials &&
         MATERIALS.map((mat, i) => {
           const isEven = i % 2 === 0;
@@ -805,7 +985,7 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "1.4rem",
+                color: "#fff",
                 boxShadow: isPurification
                   ? `0 0 20px 6px ${mat.color}, 0 4px 12px rgba(0,0,0,0.3)`
                   : isRedistribution
@@ -816,12 +996,11 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
                 animation: "fadeScaleIn 0.5s ease forwards",
                 animationDelay: `${i * 0.1}s`,
                 opacity: 0,
-                border: isPurification
-                  ? `2px solid ${mat.color}`
-                  : "none",
+                border: isPurification ? `2px solid ${mat.color}` : "none",
+                zIndex: 18,
               }}
             >
-              {mat.icon}
+              <Icon name={mat.iconKey} size={22} color="#fff" />
             </div>
           );
         })}
@@ -837,7 +1016,7 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
         darkColor="#388e3c"
       />
 
-      {/* Ceiling lights with industrial feel */}
+      {/* Ceiling lights */}
       <div
         style={{
           position: "absolute",
@@ -887,7 +1066,7 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
         ))}
       </div>
 
-      {/* Safety markings on floor */}
+      {/* Floor markings */}
       <div
         style={{
           position: "absolute",
@@ -902,11 +1081,7 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
         {Array.from({ length: 5 }, (_, i) => (
           <div
             key={i}
-            style={{
-              display: "flex",
-              gap: 4,
-              alignItems: "center",
-            }}
+            style={{ display: "flex", gap: 4, alignItems: "center" }}
           >
             {Array.from({ length: 4 }, (_, j) => (
               <div
@@ -928,6 +1103,14 @@ const SceneAnimation: FC<SceneAnimationProps> = ({ step }) => {
         @keyframes blinkLight {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.3; }
+        }
+        @keyframes scanBeam {
+          0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+          50% { opacity: 1; transform: scaleY(1); }
+        }
+        @keyframes sparkFloat {
+          0% { transform: translateY(0) scale(1); opacity: 1; }
+          100% { transform: translateY(-60px) scale(0.3); opacity: 0; }
         }
       `}</style>
     </div>
@@ -958,6 +1141,7 @@ const StepIndicator: FC<StepIndicatorProps> = ({
       minWidth: 60,
       flex: 1,
       outline: "none",
+      transition: "transform 0.2s",
     }}
     onMouseEnter={(e) =>
       ((e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)")
@@ -990,7 +1174,7 @@ const StepIndicator: FC<StepIndicatorProps> = ({
         transition: "all 0.3s",
       }}
     >
-      {isPast ? "✓" : step.id}
+      {isPast ? <Icon name="check" size={20} /> : step.id}
     </div>
     <div
       style={{
@@ -1045,7 +1229,6 @@ const StepCard: FC<StepCardProps> = ({ step, isActive, onClick }) => (
         : "none";
     }}
   >
-    {/* Accent bar */}
     <div
       style={{
         position: "absolute",
@@ -1057,7 +1240,6 @@ const StepCard: FC<StepCardProps> = ({ step, isActive, onClick }) => (
       }}
     />
 
-    {/* Header */}
     <div style={{ display: "flex", alignItems: "center", marginBottom: 22 }}>
       <div
         style={{
@@ -1069,12 +1251,12 @@ const StepCard: FC<StepCardProps> = ({ step, isActive, onClick }) => (
           alignItems: "center",
           justifyContent: "center",
           marginRight: 18,
-          fontSize: "1.8rem",
+          color: "white",
           boxShadow: `0 8px 20px ${step.color}44`,
           flexShrink: 0,
         }}
       >
-        {step.icon}
+        <Icon name={step.iconKey} size={30} color="white" />
       </div>
       <div>
         <div
@@ -1101,7 +1283,6 @@ const StepCard: FC<StepCardProps> = ({ step, isActive, onClick }) => (
       </div>
     </div>
 
-    {/* Description */}
     <p
       style={{
         color: "#5a6c7d",
@@ -1113,7 +1294,6 @@ const StepCard: FC<StepCardProps> = ({ step, isActive, onClick }) => (
       {step.description}
     </p>
 
-    {/* Features */}
     <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
       {step.features.map((feature) => (
         <li
@@ -1138,13 +1318,11 @@ const StepCard: FC<StepCardProps> = ({ step, isActive, onClick }) => (
               alignItems: "center",
               justifyContent: "center",
               marginRight: 12,
-              fontSize: "0.7rem",
               color: "white",
-              fontWeight: 700,
               flexShrink: 0,
             }}
           >
-            ✓
+            <Icon name="check" size={12} color="white" />
           </div>
           {feature}
         </li>
@@ -1176,7 +1354,6 @@ const DesktopProcess = () => {
     [stopAutoPlay],
   );
 
-  // Auto-advance when playing
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -1211,7 +1388,7 @@ const DesktopProcess = () => {
       className="pt-20"
     >
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "20px 16px" }}>
-        {/* ── Header ─────────────────────────────────────────────────────────── */}
+        {/* Header */}
         <header
           style={{
             textAlign: "center",
@@ -1226,7 +1403,6 @@ const DesktopProcess = () => {
           }}
           className="page-header"
         >
-          {/* Dot-grid background texture */}
           <div
             aria-hidden="true"
             style={{
@@ -1270,7 +1446,6 @@ const DesktopProcess = () => {
             recovery efficiency.
           </p>
 
-          {/* Stats */}
           <div
             className="stats-grid"
             style={{
@@ -1315,7 +1490,7 @@ const DesktopProcess = () => {
           </div>
         </header>
 
-        {/* ── Animation Scene ─────────────────────────────────────────────────── */}
+        {/* Animation Scene */}
         <div
           role="region"
           aria-label="Recycling process animation"
@@ -1331,7 +1506,6 @@ const DesktopProcess = () => {
             border: "1px solid rgba(255,255,255,0.08)",
           }}
         >
-          {/* Floor */}
           <div
             aria-hidden="true"
             style={{
@@ -1343,7 +1517,6 @@ const DesktopProcess = () => {
               boxShadow: "inset 0 10px 20px rgba(0,0,0,0.5)",
             }}
           />
-          {/* Ceiling */}
           <div
             aria-hidden="true"
             style={{
@@ -1358,7 +1531,6 @@ const DesktopProcess = () => {
 
           <SceneAnimation step={currentStep} />
 
-          {/* Step label overlay */}
           <div
             aria-live="polite"
             className="step-label-overlay"
@@ -1377,13 +1549,18 @@ const DesktopProcess = () => {
               letterSpacing: 1,
               border: "1px solid rgba(255,255,255,0.1)",
               whiteSpace: "nowrap",
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              zIndex: 30,
             }}
           >
-            {activeStep.icon} {activeStep.number} — {activeStep.title}
+            <Icon name={activeStep.iconKey} size={18} color="#ffb74d" />
+            {activeStep.number} — {activeStep.title}
           </div>
         </div>
 
-        {/* ── Step Indicators ─────────────────────────────────────────────────── */}
+        {/* Step Indicators */}
         <nav
           aria-label="Process steps"
           className="step-indicators-nav"
@@ -1398,7 +1575,6 @@ const DesktopProcess = () => {
             gap: 4,
           }}
         >
-          {/* Connecting line */}
           <div
             aria-hidden="true"
             style={{
@@ -1422,7 +1598,7 @@ const DesktopProcess = () => {
           ))}
         </nav>
 
-        {/* ── Progress Bar ────────────────────────────────────────────────────── */}
+        {/* Progress Bar */}
         <div
           role="progressbar"
           aria-valuenow={currentStep}
@@ -1452,7 +1628,38 @@ const DesktopProcess = () => {
           </div>
         </div>
 
-        {/* ── Step Cards ──────────────────────────────────────────────────────── */}
+        {/* Play/Pause control */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: 36,
+          }}
+        >
+          <button
+            onClick={() => setIsPlaying((p) => !p)}
+            aria-label={isPlaying ? "Pause animation" : "Play animation"}
+            style={{
+              background: isPlaying
+                ? "linear-gradient(135deg,#e74c3c,#c0392b)"
+                : "linear-gradient(135deg,#0a4f70,#1a7ca3)",
+              color: "white",
+              border: "none",
+              borderRadius: 50,
+              padding: "12px 32px",
+              fontSize: "0.95rem",
+              fontWeight: 700,
+              letterSpacing: 0.5,
+              cursor: "pointer",
+              boxShadow: "0 8px 20px rgba(10,79,112,0.3)",
+              transition: "all 0.3s ease",
+            }}
+          >
+            {isPlaying ? "⏸ Pause" : "▶ Play Process"}
+          </button>
+        </div>
+
+        {/* Step Cards */}
         <section
           aria-label="Recycling process details"
           style={{
@@ -1474,7 +1681,6 @@ const DesktopProcess = () => {
         </section>
       </div>
 
-      {/* ── Global keyframes ──────────────────────────────────────────────────── */}
       <style>{`
         * { box-sizing: border-box; }
 
@@ -1518,7 +1724,15 @@ const DesktopProcess = () => {
           50% { opacity: 0.3; }
         }
 
-        /* ── Mobile Responsive Styles ─────────────────────────────────────── */
+        @keyframes scanBeam {
+          0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+          50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        @keyframes sparkFloat {
+          0% { transform: translateY(0) scale(1); opacity: 1; }
+          100% { transform: translateY(-60px) scale(0.3); opacity: 0; }
+        }
 
         @media (max-width: 768px) {
           .page-header {
