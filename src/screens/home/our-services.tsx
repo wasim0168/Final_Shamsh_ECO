@@ -91,7 +91,7 @@ export default function RecyclingProcess() {
 
   return (
     <>
-      <section className="relative w-full bg-background py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+      <section className="relative w-full bg-background py-20 sm:py-8 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <motion.div
             className="space-y-12 sm:space-y-16"
